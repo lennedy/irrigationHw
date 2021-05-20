@@ -7,11 +7,15 @@ from pyhap.accessory import Accessory, Bridge
 from pyhap.accessory_driver import AccessoryDriver
 import pyhap.loader as loader
 
+from gpiozero import LED
+
 def get_bridge(driver):
     """Call this method to get a Bridge instead of a standalone accessory."""
     bridge = Bridge(driver, 'Bridge')
-    temp_valv1 = Valve("Valve1", -1, driver, 'MyValve1')
-    temp_valv2 = Valve("Valve2", -1, driver, 'MyValve2')
+    temp_valv1 = Valve("Valve1", 16, driver, 'MyValve1')
+    temp_valv2 = Valve("Valve2", 12, driver, 'MyValve2')
+    led = LED(25)
+    led.blink(0.25,0.25)
 #    temp_sensor = TemperatureSensor(driver, 'Sensor 2')
 #    temp_sensor2 = TemperatureSensor(driver, 'Sensor 1')
     bridge.add_accessory(temp_valv1)
