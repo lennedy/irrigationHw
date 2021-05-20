@@ -3,6 +3,8 @@ import time
 from pyhap.accessory import Accessory
 from pyhap.const import CATEGORY_SPRINKLER
 
+from gpiozero import DigitalOutputDevice
+
 class Relay:
   def __init__(self):
     self.value = False
@@ -57,7 +59,7 @@ class Valve(Accessory):
         if(pin<0):
             self._relay = Relay()
         else:
-            self._relay = DigitalOutputDevice(pin=pin, active_high=active_high, initial_value=initial_value)
+            self._relay = DigitalOutputDevice(pin=pin, active_high=True, initial_value=self._active)
 
     def openHw(self):
         self._relay.value = 1
