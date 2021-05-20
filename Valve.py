@@ -1,10 +1,6 @@
 import time
 
-from pyhap.accessory import Accessory, Bridge
-from pyhap.accessory_driver import AccessoryDriver
-import pyhap.loader as loader
-##from pyhap.const import Category
-import pyhap.loader as loader
+from pyhap.accessory import Accessory
 from pyhap.const import CATEGORY_SPRINKLER
 
 class Relay:
