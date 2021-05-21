@@ -15,14 +15,20 @@ def get_bridge(driver):
     bridge = Bridge(driver, 'Bridge')
     button1    = MyButton(5)
     button2    = MyButton(6)
-    temp_valv1 = Valve("Valve1", 16, driver, 'MyValve1')
-    temp_valv2 = Valve("Valve2", 12, driver, 'MyValve2')
+    buttonOff  = MyButton(19)
+    valv1 = Valve("Valve1", 16, driver, 'MyValve1')
+    valv2 = Valve("Valve2", 12, driver, 'MyValve2')
+    valv1.appendButtonOnOff(button1)
+    valv2.appendButtonOnOff(button2)
+
+    valv1.appendButtonOff(buttonOff)
+    valv2.appendButtonOff(buttonOff)
+
     led = LED(25)
     led.blink(0.25,0.25)
-#    temp_sensor = TemperatureSensor(driver, 'Sensor 2')
-#    temp_sensor2 = TemperatureSensor(driver, 'Sensor 1')
-    bridge.add_accessory(temp_valv1)
-    bridge.add_accessory(temp_valv2)
+
+    bridge.add_accessory(valv1)
+    bridge.add_accessory(valv2)
 
     return bridge
 
