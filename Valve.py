@@ -4,6 +4,7 @@ from pyhap.accessory import Accessory
 from pyhap.const import CATEGORY_SPRINKLER
 
 from gpiozero import DigitalOutputDevice
+from MyButton import MyButton
 
 class Relay:
   def __init__(self):
@@ -41,8 +42,10 @@ class Valve(Accessory):
         self._valveType    = 1
         self._inUse        = 1
         self._duration     = 60
-        self.timer = Timer()
-        self._active = False
+        self.timer         = Timer()
+        self._active       = False
+        self.__buttonOnOff = MyButton()
+        self.__buttonOff   = MyButton()
         
         # Add the services that this Accessory will support with add_preload_service here        
         serv_valve             = self.add_preload_service('Valve', chars=['Active', 'InUse', 'ValveType', 'SetDuration', 'RemainingDuration', "Name"])
@@ -78,7 +81,12 @@ class Valve(Accessory):
         self.char_active.set_value(0)
         self.char_inUse.set_value(0) 
         self.char_remainingDur.set_value(0)
-        
+
+    def appendButtonOnOff(self, button):
+        self.__buttonOnOff = button
+
+    def appendButtonOff(self, button):
+        self.__buttonOff = button
 
     def print(self):
 #        print ("Nome: "+self.name)
@@ -106,7 +114,13 @@ class Valve(Accessory):
     def run(self):
         """This method runs every 3 seconds.
         """        
-      
+        if self.__buttonOnOff.wasPressed():
+            print("passei por aqui")
+            self._state = not self._state
+
+        if self.__buttonOff.wasPressed():
+            print("passei por aqui")
+            self._state = False
         
         if self._state:
             if (self._active==False):
@@ -123,7 +137,7 @@ class Valve(Accessory):
             self.closeHw()
             self.closeGUI()        
            
-        self.print()
+#        self.print()
 
 
     # The `stop` method can be `async` as well
