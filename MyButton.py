@@ -2,14 +2,15 @@ from gpiozero import Button
 
 class MyDevice:
   def __init__(self, pin):
-    self.pin = pin
+    self.__pin = pin
     if pin<0:
-      self.enable = False
+      self.__enable = False
     else:
-      self.enable = True
+      self.__enable = True
 
+#********************************************************#
   def isEnable(self):
-    return self.enable
+    return self.__enable
 
 class SimulatedButton:
   def __init__(self, pin):
@@ -19,7 +20,7 @@ class MyButton(MyDevice):
 
   def __init__(self, pin=-1):
     super().__init__(pin)
-    self.buttonPressed = False
+    self.__buttonPressed = False
 
     if self.isEnable():
       self.button = Button(pin)
@@ -27,15 +28,22 @@ class MyButton(MyDevice):
     else:
       self.button = SimulatedButton(pin)
 
+#********************************************************#
   def setPressed(self):
-    self.buttonPressed =True
+    self.__buttonPressed = True
     print("The button was pressed!")
 
+#********************************************************#
   def wasPressed(self):
-    buttonPressed      = self.buttonPressed
-    self.buttonPressed = False
+    if (not self.isEnable() ):
+      return False
+
+    buttonPressed        = self.__buttonPressed
+    self.__buttonPressed = False
+    print("botao precionado: ", buttonPressed)
     return buttonPressed
 
+#********************************************************#
 
 #button = MyButton(5)
 #while True:
