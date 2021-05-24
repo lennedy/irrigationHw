@@ -1,4 +1,4 @@
-#from gpiozero import Button
+from gpiozero import Button
 
 class MyDevice:
   def __init__(self, pin):
@@ -11,11 +11,11 @@ class MyDevice:
 #********************************************************#
   def isEnable(self):
     return self.__enable
-
+##########################################################
 class SimulatedButton:
   def __init__(self, pin):
     self.pin = pin
-
+##########################################################
 class MyButton(MyDevice):
 
   def __init__(self, pin=-1):

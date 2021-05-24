@@ -3,32 +3,40 @@ import signal
 
 from Valve import Valve
 from MyButton import MyButton
+from MyLed import MyLed
 
 from pyhap.accessory import Accessory, Bridge
 from pyhap.accessory_driver import AccessoryDriver
 import pyhap.loader as loader
 
-#from gpiozero import LED
+from gpiozero import LED
 from Pins import Pins
 
 def get_bridge(driver):
     """Call this method to get a Bridge instead of a standalone accessory."""
-    pins = Pins("Disable")
+    pins = Pins("Enable")
     bridge = Bridge(driver, 'Bridge')
     button1    = MyButton(pins.buttonValve1())
     button2    = MyButton(pins.buttonValve2())
-    buttonOff  = MyButton(pins.buttonAllOff())
     buttonTemp = MyButton(pins.buttonValve3())
-    valv1 = Valve("Valve1", -1, driver, 'MyValve1')
-    valv2 = Valve("Valve2", -1, driver, 'MyValve2')
+    buttonOff  = MyButton(pins.buttonAllOff()) #This is not configured yet
+
+    led1  = MyLed(pins.ledValve1())
+    led2  = MyLed(pins.ledValve2())
+
+    valv1 = Valve("Valve1", pins.releValve1(), driver, 'MyValve1')
+    valv2 = Valve("Valve2", pins.releValve2(), driver, 'MyValve2')
     valv1.appendButtonOnOff(button1)
+    valv1.appendLed(led1)
     valv2.appendButtonOnOff(button2)
+    valv2.appendLed(led2)
+    
 
     valv1.appendButtonOff(buttonOff)
     valv2.appendButtonOff(buttonOff)
 
-#    led = LED(-1)
-#    led.blink(0.25,0.25)
+    led = MyLed(pins.ledSystem())
+    led.blink()
 
     bridge.add_accessory(valv1)
     bridge.add_accessory(valv2)

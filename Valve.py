@@ -3,8 +3,9 @@ import time
 from pyhap.accessory import Accessory
 from pyhap.const import CATEGORY_SPRINKLER
 
-#from gpiozero import DigitalOutputDevice
+from gpiozero import DigitalOutputDevice
 from MyButton import MyButton
+from MyLed import MyLed
 
 class Relay:
   def __init__(self):
@@ -46,6 +47,7 @@ class Valve(Accessory):
         self._active       = False
         self.__buttonOnOff = MyButton()
         self.__buttonOff   = MyButton()
+        self.__led         = MyLed()
         
         # Add the services that this Accessory will support with add_preload_service here        
         serv_valve             = self.add_preload_service('Valve', chars=['Active', 'InUse', 'ValveType', 'SetDuration', 'RemainingDuration', "Name"])
@@ -66,10 +68,12 @@ class Valve(Accessory):
 
     def openHw(self):
         self._relay.value = 1
+        self.__led.on()
         self._active = True
         
     def closeHw(self):
         self._relay.value = 0      
+        self.__led.off()
         self._active = False
         
     def openGUI(self):
@@ -87,6 +91,9 @@ class Valve(Accessory):
 
     def appendButtonOff(self, button):
         self.__buttonOff = button
+
+    def appendLed(self, led):
+        self.__led =  led
 
     def print(self):
 #        print ("Nome: "+self.name)
