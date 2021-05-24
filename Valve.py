@@ -3,7 +3,7 @@ import time
 from pyhap.accessory import Accessory
 from pyhap.const import CATEGORY_SPRINKLER
 
-from gpiozero import DigitalOutputDevice
+#from gpiozero import DigitalOutputDevice
 from MyButton import MyButton
 
 class Relay:

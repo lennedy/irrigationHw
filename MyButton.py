@@ -1,4 +1,4 @@
-from gpiozero import Button
+#from gpiozero import Button
 
 class MyDevice:
   def __init__(self, pin):
