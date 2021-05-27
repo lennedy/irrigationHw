@@ -40,7 +40,7 @@ class MyButton(MyDevice):
 
     buttonPressed        = self.__buttonPressed
     self.__buttonPressed = False
-    print("botao precionado: ", buttonPressed)
+
     return buttonPressed
 
 #********************************************************#
