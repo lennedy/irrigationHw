@@ -25,18 +25,20 @@ def get_bridge(driver):
     led2  = MyLed(pins.ledValve2())
 
     valv1 = Valve("Valve1", pins.releValve1(), driver, 'MyValve1')
-    valv2 = Valve("Valve2", pins.releValve2(), driver, 'MyValve2')
+    valv2 = Valve("Valve2", pins.releValve3(), driver, 'MyValve2')
     valv1.appendButtonOnOff(button1)
     valv1.appendLed(led1)
     valv2.appendButtonOnOff(button2)
     valv2.appendLed(led2)
     
-
     valv1.appendButtonOff(buttonOff)
     valv2.appendButtonOff(buttonOff)
 
     led = MyLed(pins.ledSystem())
     led.blink()
+
+    valv1.set_info_service(serial_number = "0000008") #Serial number is essential for working with home assistant
+    valv2.set_info_service(serial_number = "0000009") #Serial number is essential for working with home assistant
 
     bridge.add_accessory(valv1)
     bridge.add_accessory(valv2)
