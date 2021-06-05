@@ -1,6 +1,6 @@
 from gpiozero import LED
-from MyButton import MyDevice
-
+from MyDevice import MyDevice
+##########################################################
 class SimulatedLed:
   def __init__(self,pin):
     self.__pin = pin
@@ -10,7 +10,9 @@ class SimulatedLed:
     self.__ledState = True
   def off(self):
     self.__ledState = False
-
+  def blink(self,a1,a2):
+    a=0
+##########################################################
 class MyLed(MyDevice):
   def __init__(self, pin=-1):
     super().__init__(pin)
