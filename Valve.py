@@ -42,7 +42,7 @@ class Valve(Accessory):
         self._state        = False
         self._valveType    = 1
         self._inUse        = 1
-        self._duration     = 60
+        self._duration     = 60*15
         self.timer         = Timer()
         self._active       = False
         self.__buttonOnOff = MyButton()
