@@ -1,16 +1,7 @@
 from gpiozero import Button
+from MyDevice import MyDevice
+from MyLed import MyLed
 
-class MyDevice:
-  def __init__(self, pin):
-    self.__pin = pin
-    if pin<0:
-      self.__enable = False
-    else:
-      self.__enable = True
-
-#********************************************************#
-  def isEnable(self):
-    return self.__enable
 ##########################################################
 class SimulatedButton:
   def __init__(self, pin):
@@ -28,9 +19,13 @@ class MyButton(MyDevice):
     else:
       self.button = SimulatedButton(pin)
 
+    self.led = MyLed()
+
 #********************************************************#
   def setPressed(self):
     self.__buttonPressed = True
+    if self.led.isEnable():
+      self.led.blink()
     print("The button was pressed!")
 
 #********************************************************#
@@ -44,7 +39,9 @@ class MyButton(MyDevice):
     return buttonPressed
 
 #********************************************************#
-
+  def appendLed(self, led):
+    self.led = led
+#********************************************************#
 #button = MyButton(5)
 #while True:
 #  a=0
